@@ -13,6 +13,7 @@ export default class ContactDetails extends React.Component {
 
     this.onToggle = this.onToggle.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   onToggle() {
@@ -36,6 +37,13 @@ export default class ContactDetails extends React.Component {
     this.setState(nextState);
   }
 
+  onKeyPress(e) {
+    const ENTER_KEY = 13;
+    if (e.charCode === ENTER_KEY) {
+      this.onToggle();
+    }
+  }
+
   render() {
     const read = (
       <div>
@@ -48,14 +56,21 @@ export default class ContactDetails extends React.Component {
       <div>
       <p>
         <input
-          type="text" name="name" placeholder="name"
-          value={this.state.name} onChange={this.onChange}
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={this.state.name}
+          onChange={this.onChange}
         />
       </p>
       <p>
         <input
-          type="text" name="phone" placeholder="phone"
-          value={this.state.phone} onChange={this.onChange}
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={this.state.phone}
+          onChange={this.onChange}
+          onKeyPress={this.onKeyPress}
         />
       </p>
     </div>
@@ -78,7 +93,6 @@ export default class ContactDetails extends React.Component {
         { this.props.isSelected ? details : blank }
       </div>
     )
-
   }
 }
 

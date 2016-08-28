@@ -9,6 +9,7 @@ export default class ContactCreate extends React.Component {
     }
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   onChange(e) {
@@ -29,17 +30,24 @@ export default class ContactCreate extends React.Component {
     });
   }
 
+  onKeyPress(e) {
+    const ENTER_KEY = 13;
+    if (e.charCode === ENTER_KEY) {
+      this.onClick();
+    }
+  }
+
   render() {
     return (
       <div>
         <h2>Create Contact</h2>
         <p>
-          <input type="text" name="name" placeholder="name"
+          <input type="text" name="name" placeholder="Name"
             value={this.state.name} onChange={this.onChange} />
         </p>
         <p>
-          <input type="text" name="phone" placeholder="phone"
-            value={this.state.phone} onChange={this.onChange} />
+          <input type="text" name="phone" placeholder="Phone"
+            value={this.state.phone} onChange={this.onChange} onKeyPress={this.onKeyPress} />
         </p>
         <button onClick={this.onClick}>Create</button>
       </div>
