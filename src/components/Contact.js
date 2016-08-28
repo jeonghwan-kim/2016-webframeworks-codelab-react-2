@@ -27,6 +27,23 @@ export default class Contact extends React.Component {
     this.onRemove = this.onRemove.bind(this);
   }
 
+  componentWillMount() {
+    let contactData = localStorage.contactData;
+
+    if (contactData) {
+      this.setState({
+        contactData: JSON.parse(contactData)
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const contactDataString =  JSON.stringify(this.state.contactData);
+    if (JSON.stringify(prevState.contactData) !== contactDataString) {
+      localStorage.contactData = contactDataString;
+    }
+  }
+
   onChange(e) {
     this.setState({
       keyword: e.target.value
