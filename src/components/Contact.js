@@ -1,7 +1,9 @@
 import React from 'react';
+import update from 'react-addons-update';
 
 import ContactInfo from './ContactInfo';
 import ContactDetails from './ContactDetails';
+import ContactCreate from './ContactCreate';
 
 export default class Contact extends React.Component {
   constructor(props) {
@@ -20,6 +22,9 @@ export default class Contact extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onCreate = this.onCreate.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   onChange(e) {
@@ -29,10 +34,36 @@ export default class Contact extends React.Component {
   }
 
   onClick(key) {
-    console.log(key);
     this.setState({
       selectedKey: key
-     });
+    });
+  }
+
+  onCreate(contact) {
+    this.setState({
+      contactData: update(this.state.contactData, {
+        $push: [contact]
+      })
+    });
+  }
+
+  onUpdate(name, phone) {
+    this.setState({
+      contactData: update(this.state.contactData, {
+        [this.state.selectedKey]: {
+          name: { $set: name },
+          phone: { $set: phone}
+        }
+      })
+    });
+  }
+
+  onRemove() {
+    this.setState({
+      contactData: update(this.state.contactData, {
+        $splice: [[this.state.selectedKey, 1]]
+      })
+    });
   }
 
   render() {
@@ -68,6 +99,8 @@ export default class Contact extends React.Component {
           contact={this.state.contactData[this.state.selectedKey]}
           isSelected={this.state.selectedKey > -1}
         />
+        <ContactCreate
+          onCreate={this.onCreate}/>
       </div>
     )
   }
