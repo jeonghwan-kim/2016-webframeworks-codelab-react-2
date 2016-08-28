@@ -59,10 +59,12 @@ export default class Contact extends React.Component {
   }
 
   onRemove() {
+    console.log('onRemove')
     this.setState({
       contactData: update(this.state.contactData, {
         $splice: [[this.state.selectedKey, 1]]
-      })
+      }),
+      selectedKey: -1
     });
   }
 
@@ -98,6 +100,7 @@ export default class Contact extends React.Component {
         <ContactDetails
           contact={this.state.contactData[this.state.selectedKey]}
           isSelected={this.state.selectedKey > -1}
+          onRemove={this.onRemove}
         />
         <ContactCreate
           onCreate={this.onCreate}/>

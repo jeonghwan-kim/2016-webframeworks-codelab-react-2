@@ -6,6 +6,7 @@ export default class ContactDetails extends React.Component {
       <div>
         <p>Name: { this.props.contact.name }</p>
         <p>Phone: { this.props.contact.phone }</p>
+        <p><button onClick={this.props.onRemove}>Remove</button></p>
       </div>
     );
 
