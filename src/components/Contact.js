@@ -1,5 +1,7 @@
 import React from 'react';
+
 import ContactInfo from './ContactInfo';
+import ContactDetails from './ContactDetails';
 
 export default class Contact extends React.Component {
   constructor(props) {
@@ -7,6 +9,7 @@ export default class Contact extends React.Component {
 
     this.state = {
       keyword: '',
+      selectedKey: -1,
       contactData: [
         { name: 'Abet', phone: '010-0000-0001' },
         { name: 'Betty', phone: '010-0000-0002' },
@@ -16,12 +19,20 @@ export default class Contact extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onChange(e) {
     this.setState({
       keyword: e.target.value
     });
+  }
+
+  onClick(key) {
+    console.log(key);
+    this.setState({
+      selectedKey: key
+     });
   }
 
   render() {
@@ -33,18 +44,30 @@ export default class Contact extends React.Component {
         });
       }
       return data.map((contactInfo, i) => {
-        return (<ContactInfo contact={contactInfo} key={i} />);
+        return (
+          <ContactInfo
+            contact={contactInfo}
+            key={i}
+            onClick={() => this.onClick(i)}
+          />
+        );
       });
     };
 
     return (
       <div>
         <h1>Contacts</h1>
-        <input  type="text"
-                placeholder="Search"
-                value={this.state.keyword}
-                onChange={this.onChange} />
+        <input
+          type="text"
+          placeholder="Search"
+          value={this.state.keyword}
+          onChange={this.onChange}
+        />
         <div>{mapToComponents(this.state.contactData)}</div>
+        <ContactDetails
+          contact={this.state.contactData[this.state.selectedKey]}
+          isSelected={this.state.selectedKey > -1}
+        />
       </div>
     )
   }
