@@ -28,6 +28,8 @@ export default class ContactCreate extends React.Component {
       name: '',
       phone: ''
     });
+
+    this.nameInput.focus();
   }
 
   onKeyPress(e) {
@@ -42,12 +44,23 @@ export default class ContactCreate extends React.Component {
       <div>
         <h2>Create Contact</h2>
         <p>
-          <input type="text" name="name" placeholder="Name"
-            value={this.state.name} onChange={this.onChange} />
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={this.state.name}
+            onChange={this.onChange}
+            ref={ (ref) => { this.nameInput = ref } }
+          />
         </p>
         <p>
-          <input type="text" name="phone" placeholder="Phone"
-            value={this.state.phone} onChange={this.onChange} onKeyPress={this.onKeyPress} />
+          <input type="text"
+            name="phone"
+            placeholder="Phone"
+            value={this.state.phone}
+            onChange={this.onChange}
+            onKeyPress={this.onKeyPress}
+          />
         </p>
         <button onClick={this.onClick}>Create</button>
       </div>
