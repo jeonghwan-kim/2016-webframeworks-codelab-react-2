@@ -19,7 +19,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: ['react-hot', 'babel?' + JSON.stringify({
+      loaders: ['react-hot', 'babel?' + JSON.stringify({
         cacheDirectory: true,
         presets: ['es2015', 'react']
       })],

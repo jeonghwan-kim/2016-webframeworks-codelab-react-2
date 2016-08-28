@@ -6,6 +6,7 @@ export default class Contact extends React.Component {
     super(props);
 
     this.state = {
+      keyword: '',
       contactData: [
         { name: 'Abet', phone: '010-0000-0001' },
         { name: 'Betty', phone: '010-0000-0002' },
@@ -13,10 +14,24 @@ export default class Contact extends React.Component {
         { name: 'David', phone: '010-0000-0004'}
       ]
     };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({
+      keyword: e.target.value
+    });
   }
 
   render() {
     const mapToComponents = data => {
+      data.sort();
+      if (this.state.keyword && this.state.keyword.length) {
+        data = data.filter(contact => {
+          return contact.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) > -1
+        });
+      }
       return data.map((contactInfo, i) => {
         return (<ContactInfo contact={contactInfo} key={i} />);
       });
@@ -25,6 +40,10 @@ export default class Contact extends React.Component {
     return (
       <div>
         <h1>Contacts</h1>
+        <input  type="text"
+                placeholder="Search"
+                value={this.state.keyword}
+                onChange={this.onChange} />
         <div>{mapToComponents(this.state.contactData)}</div>
       </div>
     )
